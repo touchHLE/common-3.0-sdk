@@ -1,7 +1,6 @@
 [submodule "sources/xnu"]
 	path = sources/xnu
 	url = https://github.com/apple-oss-distributions/xnu.git
-	branch = rel/xnu-4570
 [submodule "sources/csu"]
 	path = sources/csu
 	url = https://github.com/apple-oss-distributions/Csu.git
