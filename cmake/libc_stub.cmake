@@ -24,6 +24,8 @@ add_custom_command(
     COMMAND ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS}
             -fno-builtin -nostdlib
             ${ALL_SOURCES}/libc-stub/stub.c
+            -Wl,-install_name,/usr/lib/libSystem.B.dylib
+            -Wl,-dylib
             -o ${CMAKE_BINARY_DIR}/libSystem.B.dylib
     COMMENT libSystem.B.dylib
 )
