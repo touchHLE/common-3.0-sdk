@@ -1,0 +1,76 @@
+diff --git a/cctools/include/foreign/sys/sysctl.h b/cctools/include/foreign/sys/sysctl.h
+index 30749d1..d801673 100644
+--- a/cctools/include/foreign/sys/sysctl.h
++++ b/cctools/include/foreign/sys/sysctl.h
+@@ -1,4 +1,4 @@
+-#ifndef __CYGWIN__
++#if !defined(__CYGWIN__) && !defined(__linux__)
+ #include_next <sys/sysctl.h>
+ #else
+ #ifndef __SYSCTL_H__
+diff --git a/cctools/ld64/src/ld/Options.cpp b/cctools/ld64/src/ld/Options.cpp
+index 4e55ced..0113088 100644
+--- a/cctools/ld64/src/ld/Options.cpp
++++ b/cctools/ld64/src/ld/Options.cpp
+@@ -4255,21 +4255,7 @@ void Options::reconfigureDefaults()
+ 		case CPU_TYPE_X86_64:
+ 			break;
+ 		case CPU_TYPE_ARM:
+-			switch ( fOutputKind ) {
+-				case Options::kDynamicExecutable:
+-				case Options::kDynamicLibrary:
+-				case Options::kDynamicBundle:
+-					// user land code is limited to low 1GB
+-					fMaxAddress = 0x2FFFFFFF;
+-					break;
+-				case Options::kStaticExecutable:
+-				case Options::kObjectFile:
+-				case Options::kDyld:
+-				case Options::kPreload:
+-				case Options::kKextBundle:
+-					fMaxAddress = 0xFFFFFFFF;
+-					break;
+-			}
++			fMaxAddress = 0xFFFFFFFF;
+ 			// range check -seg1addr for ARM
+ 			if ( fBaseAddress > fMaxAddress ) {
+ 				warning("ignoring -seg1addr 0x%08llX.  Address out of range.", fBaseAddress);
+diff --git a/cctools/otool/arm64_disasm.c b/cctools/otool/arm64_disasm.c
+index d62f7ad..28ba1d6 100644
+--- a/cctools/otool/arm64_disasm.c
++++ b/cctools/otool/arm64_disasm.c
+@@ -15,7 +15,7 @@
+ #include "arm64_disasm.h"
+ #include "cxa_demangle.h"
+ 
+-struct disassemble_info {
++static struct disassemble_info {
+   /* otool(1) specific stuff */
+   enum bool verbose;
+   /* Relocation information.  */
+diff --git a/cctools/otool/arm_disasm.c b/cctools/otool/arm_disasm.c
+index 1d9d726..9067f2c 100644
+--- a/cctools/otool/arm_disasm.c
++++ b/cctools/otool/arm_disasm.c
+@@ -64,7 +64,7 @@ typedef char bfd_byte;
+ 
+ /* HACKS to avoid pulling in all of FSF binutils include/dis-asm.h */
+ typedef int (*fprintf_ftype) (void *, const char*, ...);
+-struct disassemble_info { /* HACK'ed up for just what we need here */
++static struct disassemble_info { /* HACK'ed up for just what we need here */
+   fprintf_ftype fprintf_func;
+   void *stream;
+ 
+diff --git a/cctools/otool/i386_disasm.c b/cctools/otool/i386_disasm.c
+index 57092be..db9bd10 100644
+--- a/cctools/otool/i386_disasm.c
++++ b/cctools/otool/i386_disasm.c
+@@ -1617,7 +1617,7 @@ static unsigned int xmm_rm(int r_m, int rex)
+ /*
+  * This is passed to the llvm disassembler.
+  */
+-struct disassemble_info {
++static struct disassemble_info {
+   enum bool verbose;
+   /* Relocation information.  */
+   struct relocation_info *sorted_relocs;
