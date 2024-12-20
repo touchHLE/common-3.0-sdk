@@ -14,3 +14,12 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/cctools_port.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/csu.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/sdk_libs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/libc_stub.cmake)
+
+add_custom_target(all ALL
+    DEPENDS
+        copy_sdk_headers
+        build_cctools
+        copy_sdk_libs
+        csu
+        libsystem
+)
