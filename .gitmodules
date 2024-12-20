@@ -5,3 +5,6 @@
 	path = sources/csu
 	url = https://github.com/apple-oss-distributions/Csu.git
 	branch = tags/Csu-85
+[submodule "sources/cctools-port"]
+	path = sources/cctools-port
+	url = https://github.com/tpoechtrager/cctools-port.git
