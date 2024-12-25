@@ -9,3 +9,6 @@
 	path = sources/cctools-port
 	url = https://github.com/tpoechtrager/cctools-port.git
 	ignore = dirty
+[submodule "sources/xnu-1699"]
+	path = sources/xnu-1699
+	url = https://github.com/apple-oss-distributions/xnu.git
