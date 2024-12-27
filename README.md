@@ -8,14 +8,7 @@
 
 ## Make all targets
 
-`make copy_sdk_headers`
+`make build_sdk`
 
-`make builc_cctools`
-
-`make copy_sdk_libs`
-
-`make csu`
-
-`make libsystem`
-
+## Create SDK
 `make install`
