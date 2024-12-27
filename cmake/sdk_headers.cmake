@@ -1,55 +1,39 @@
-add_custom_target(copy_sdk_headers
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "${SDK_SOURCE}"
-    "${SDK_DEST}"
+find_package(Python3 REQUIRED)
 
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-    "${SDK_DEST}/arm"
-    "${SDK_DEST}/mach"
-    "${SDK_DEST}/mach/arm"
-    "${SDK_DEST}/mach/machine"
-    "${SDK_DEST}/libkern/arm"
+file(MAKE_DIRECTORY ${SDK_PATH}/usr)
 
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/bsd/arm/*.h"
-    "${SDK_DEST}/arm"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/osfmk/arm/arch.h"
-    "${SDK_DEST}/arm"
-
-    COMMAND ${CMAKE_COMMAND} -E rename
-    "${SDK_DEST}/arm/_mcontext.h"
-    "${SDK_DEST}/arm/_structs.h"
-
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/libkern/libkern/arm/OSByteOrder.h"
-    "${SDK_DEST}/libkern/arm/OSByteOrder.h"
-
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/osfmk/mach/*.h"
-    "${SDK_DEST}/mach"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/osfmk/mach/arm/*.h"
-    "${SDK_DEST}/mach/arm"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/osfmk/mach/machine/*.h"
-    "${SDK_DEST}/mach/machine"
-    # Need to overwrite with old message.h
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${SDK_SOURCE}/mach/message.h"
-    "${SDK_DEST}/mach"
-
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${XNU_SOURCE}/EXTERNAL_HEADERS/stdint.h"
-    "${SDK_DEST}/stdint.h"
-
-    COMMENT "Copying SDK headers and overlaying OSS headers"
-)
+set(VENV_DIR "${CMAKE_BINARY_DIR}/.venv")
 
 add_custom_command(
-    TARGET copy_sdk_headers
-    POST_BUILD
-    COMMAND patch -p0 -i ${CMAKE_CURRENT_SOURCE_DIR}/patches/stdint.patch ${SDK_DEST}/stdint.h
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Applying patches to stdint.h"
+    OUTPUT ${VENV_DIR}/pyvenv.cfg
+    COMMAND ${Python3_EXECUTABLE} -m venv ${VENV_DIR}
+    COMMENT "Creating virtual environment"
+)
+
+add_custom_target(venv DEPENDS ${VENV_DIR}/pyvenv.cfg)
+
+message(STATUS "HEADERS_SOURCE before include: ${HEADERS_SOURCE}")
+
+add_custom_command(
+    OUTPUT ${VENV_DIR}/requirements_installed
+    COMMAND ${VENV_DIR}/bin/pip install -r ${HEADERS_SOURCE}/requirements.txt
+    COMMAND ${CMAKE_COMMAND} -E touch ${VENV_DIR}/requirements_installed
+    DEPENDS venv ${HEADERS_SOURCE}/requirements.txt
+    COMMENT "Installing Python requirements"
+)
+
+add_custom_target(install_requirements DEPENDS ${VENV_DIR}/requirements_installed)
+
+add_custom_target(setup_headers ALL
+    COMMAND ${VENV_DIR}/bin/python ${HEADERS_SOURCE}/extract_ios_headers.py 
+        --config ${HEADERS_SOURCE}/header_sources.yaml --patches ${HEADERS_SOURCE}/patches
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    DEPENDS install_requirements
+    COMMENT "Running Python script"
+)
+
+install(
+    DIRECTORY ${CMAKE_BINARY_DIR}/include
+    DESTINATION ${SDK_PATH}/usr
+    COMPONENT headesr
 )
