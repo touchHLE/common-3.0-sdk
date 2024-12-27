@@ -25,7 +25,8 @@ class RepoConfig(TypedDict):
 class HeaderExtractor:
     def __init__(self, config_path: str | Path, output_dir: str | Path):
         self.output_dir: Path = Path(output_dir)
-        shutil.rmtree(self.output_dir)
+        if self.output_dir.exists():
+            shutil.rmtree(self.output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         self.repos_dir = Path("repos")
