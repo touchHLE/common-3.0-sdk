@@ -36,7 +36,7 @@ add_custom_command(
             ${CSU_SOURCE}/start.s ${CSU_SOURCE}/crt.c ${CSU_SOURCE}/dyld_glue.s 
             -o ${CMAKE_BINARY_DIR}/crt1.v1.o 
             -DCRT -DOLD_LIBSYSTEM_SUPPORT
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building crt1.v1.o"
 )
 
@@ -47,7 +47,7 @@ add_custom_command(
             ${CSU_SOURCE}/start.s ${CSU_SOURCE}/crt.c ${CSU_SOURCE}/dyld_glue.s 
             -o ${CMAKE_BINARY_DIR}/crt1.v2.o 
             -DCRT
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building crt1.v2.o"
 )
 
@@ -58,7 +58,7 @@ add_custom_command(
             ${CSU_SOURCE}/start.s ${CSU_SOURCE}/crt.c
             -o ${CMAKE_BINARY_DIR}/crt1.v3.o 
             -DADD_PROGRAM_VARS
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building crt1.v3.o"
 )
 
@@ -69,7 +69,7 @@ add_custom_command(
             ${CSU_SOURCE}/start.s ${CSU_SOURCE}/crt.c
             -o ${CMAKE_BINARY_DIR}/crt1.v4.o
             -DADD_PROGRAM_VARS
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building crt1.v4.o"
 )
 
@@ -80,7 +80,7 @@ add_custom_command(
             ${CSU_SOURCE}/start.s ${CSU_SOURCE}/crt.c ${CSU_SOURCE}/dyld_glue.s
             -o ${CMAKE_BINARY_DIR}/gcrt1.o
             -DGCRT -DOLD_LIBSYSTEM_SUPPORT
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building gcrt1.o"
 )
 
@@ -90,7 +90,7 @@ add_custom_command(
             -static -Wl,-new_linker -nostdlib -keep_private_externs
             ${CSU_SOURCE}/start.s ${CSU_SOURCE}/crt.c
             -o ${CMAKE_BINARY_DIR}/crt0.o
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building crt0.o"
 )
 
@@ -101,7 +101,7 @@ add_custom_command(
             ${CSU_SOURCE}/dyld_glue.s ${CSU_SOURCE}/icplusplus.c
             -o ${CMAKE_BINARY_DIR}/dylib1.v1.o
             -DCFM_GLUE
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building dylib1.v1.o"
 )
 
@@ -112,7 +112,7 @@ add_custom_command(
             ${CSU_SOURCE}/dyld_glue.s
             -o ${CMAKE_BINARY_DIR}/dylib1.v2.o
             -DCFM_GLUE
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building dylib1.v2.o"
 )
 
@@ -122,7 +122,7 @@ add_custom_command(
             -nostdlib -keep_private_externs
             ${CSU_SOURCE}/dyld_glue.s
             -o ${CMAKE_BINARY_DIR}/bundle1.v1.o
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building bundle1.v1.o"
 )
 
@@ -132,7 +132,7 @@ add_custom_command(
             -nostdlib -keep_private_externs
             ${CSU_SOURCE}/lazy_dylib_helper.s ${CSU_SOURCE}/lazy_dylib_loader.c
             -o ${CMAKE_BINARY_DIR}/lazydylib1.o
-    DEPENDS setup_headers
+    DEPENDS setup_headers build_cctools
     COMMENT "Building lazydylib1.o"
 )
 
