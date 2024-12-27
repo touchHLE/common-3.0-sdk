@@ -1,8 +1,9 @@
-add_custom_target(copy_sdk_libs
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${CMAKE_CURRENT_SOURCE_DIR}/sources/iPhoneOS3.0.sdk/usr/lib/libgcc_s.1.dylib"
-    "${CMAKE_CURRENT_SOURCE_DIR}/iPhoneOS3.0-custom.sdk/usr/lib/libgcc_s.1.dylib"
+file(MAKE_DIRECTORY ${SDK_PATH}/usr/lib)
 
-    COMMENT "Copying OSS dylibs"
+install(
+    DIRECTORY ${ALL_SOURCES}/oss-libs/
+    DESTINATION ${SDK_PATH}/usr/lib
+    COMPONENT sdk_libs
+    FILES_MATCHING PATTERN "*.dylib"
 )
 

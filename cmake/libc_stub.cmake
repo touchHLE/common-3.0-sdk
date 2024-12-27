@@ -4,8 +4,8 @@ set(CMAKE_C_COMPILER clang)
 set(BASE_C_FLAGS 
     --target=arm-apple-ios
     -miphoneos-version-min=2.0
-    -B${SDK_PATH}/usr/bin
-    -I${SDK_PATH}/usr/include
+    -B${CCTOOLS_BUILD_PREFIX}/bin
+    -I${CMAKE_BINARY_DIR}/include
 )
 
 # Function to add architecture flags target var
@@ -27,6 +27,7 @@ add_custom_command(
             -Wl,-install_name,/usr/lib/libSystem.B.dylib
             -Wl,-dylib
             -o ${CMAKE_BINARY_DIR}/libSystem.B.dylib
+    DEPENDS setup_headers
     COMMENT libSystem.B.dylib
 )
 
