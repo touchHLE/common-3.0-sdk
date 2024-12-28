@@ -1,4 +1,4 @@
-# Custom iPhoneOS3.0.sdk using only OSS sources
+# Custom SDK for iPhoneOS3.0 using only OSS sources
 
 ## Build SDK
 
@@ -24,3 +24,7 @@ Apple OSS Headers and Components
 GNU libgcc Library
 - Licensed under GNU GPLv2 or later
 - Full license text in `licenses/GPL`
+
+## Important disclaimer
+
+This project is not affiliated with or endorsed by Apple Inc in any way. iPhone, iOS, iPod, iPod touch and iPad are trademarks of Apple Inc in the United States and other countries.
