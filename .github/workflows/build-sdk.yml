@@ -1,4 +1,4 @@
-name: Build iPhoneOS3.0 custom SDK
+name: Build common 3.0 SDK
 
 on:
   push:
@@ -30,15 +30,15 @@ jobs:
       run: cmake --install ${{github.workspace}}/build
 
     - name: Bundle SDK
-      run: tar -czf iPhoneOS3.0-custom.sdk.tar.gz iPhoneOS3.0-custom.sdk/
+      run: tar -czf common-3.0.sdk.tar.gz common-3.0.sdk/
 
     - uses: actions/upload-artifact@v4
       with:
-        name: iPhoneOS3.0-custom-sdk
-        path: iPhoneOS3.0-custom.sdk
+        name: common-3.0-sdk
+        path: common-3.0.sdk
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: iPhoneOS3.0-custom.sdk.tar.gz
+        files: common-3.0.sdk.tar.gz
