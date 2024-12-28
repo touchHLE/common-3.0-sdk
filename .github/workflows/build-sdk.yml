@@ -3,6 +3,7 @@ name: Build iPhoneOS3.0 custom SDK
 on:
   push:
     branches: [ "main" ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
