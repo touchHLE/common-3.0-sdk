@@ -21,7 +21,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/licenses.cmake)
 add_custom_target(build_sdk ALL
     DEPENDS 
         setup_headers
-        build_cctools
+        cctools_port
         csu
         libsystem 
 )

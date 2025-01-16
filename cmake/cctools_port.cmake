@@ -38,7 +38,7 @@ add_custom_command(
     DEPENDS ${CCTOOLS_SOURCE_DIR}/cctools/configure
 )
 
-add_custom_target(build_cctools
+add_custom_target(cctools_port
     COMMAND make -j${CMAKE_BUILD_PARALLEL_LEVEL}
     COMMAND make install
     WORKING_DIRECTORY ${CCTOOLS_BUILD_DIR}
@@ -47,7 +47,7 @@ add_custom_target(build_cctools
 )
 
 add_custom_command(
-    TARGET build_cctools
+    TARGET cctools_port
     POST_BUILD
     COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/cmake/scripts/cctool_symlinks.sh
     WORKING_DIRECTORY ${CCTOOLS_BUILD_PREFIX}/bin
