@@ -39,7 +39,7 @@ add_custom_command(
 )
 
 add_custom_target(build_cctools
-    COMMAND make
+    COMMAND make -j${CMAKE_BUILD_PARALLEL_LEVEL}
     COMMAND make install
     WORKING_DIRECTORY ${CCTOOLS_BUILD_DIR}
     COMMENT "Building cctools-port"
