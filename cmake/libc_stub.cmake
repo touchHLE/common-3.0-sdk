@@ -1,6 +1,6 @@
 set(LIBC_STUB_SOURCE_DIR "${SOURCES}/libc-stub")
 
-set(RC_ARCHS "armv6;armv7")
+set(ARCH_FLAGS -arch armv6 -arch armv7)
 
 set(CMAKE_C_COMPILER clang)
 set(BASE_C_FLAGS 
@@ -9,17 +9,6 @@ set(BASE_C_FLAGS
     -B${CCTOOLS_BUILD_PREFIX}/bin
     -I${CMAKE_BINARY_DIR}/include
 )
-
-# Function to add architecture flags target var
-function(get_arch_flags out_var)
-    set(arch_flags "")
-    foreach(arch ${RC_ARCHS})
-        list(APPEND arch_flags "-arch" ${arch})
-    endforeach()
-    set(${out_var} ${arch_flags} PARENT_SCOPE)
-endfunction()
-
-get_arch_flags(ARCH_FLAGS)
 
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/libSystem.B.dylib

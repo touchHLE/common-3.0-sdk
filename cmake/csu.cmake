@@ -1,4 +1,4 @@
-set(RC_ARCHS "armv6;armv7")
+set(ARCH_FLAGS -arch armv6 -arch armv7)
 set(OFLAG -Os)
 
 set(CMAKE_C_COMPILER clang)
@@ -17,17 +17,6 @@ set(OS_MIN_V4 -miphoneos-version-min=3.1)
 
 set(USRLIBDIR /usr/lib)
 set(LOCLIBDIR /usr/local/lib)
-
-# Function to add architecture flags target var
-function(get_arch_flags out_var)
-    set(arch_flags "")
-    foreach(arch ${RC_ARCHS})
-        list(APPEND arch_flags "-arch" ${arch})
-    endforeach()
-    set(${out_var} ${arch_flags} PARENT_SCOPE)
-endfunction()
-
-get_arch_flags(ARCH_FLAGS)
 
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/crt1.v1.o
