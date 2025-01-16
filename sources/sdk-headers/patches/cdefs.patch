@@ -1,0 +1,30 @@
+diff --git a/sys/cdefs.h b/sys/cdefs.h
+index 59e922b..868033e 100644
+--- a/sys/cdefs.h
++++ b/sys/cdefs.h
+@@ -377,11 +377,7 @@
+  * symbol suffixes used for symbol versioning
+  */
+ #if __DARWIN_UNIX03
+-#  if __DARWIN_ONLY_UNIX_CONFORMANCE
+-#    define __DARWIN_SUF_UNIX03		/* nothing */
+-#  else /* !__DARWIN_ONLY_UNIX_CONFORMANCE */
+-#    define __DARWIN_SUF_UNIX03		"$UNIX2003"
+-#  endif /* __DARWIN_ONLY_UNIX_CONFORMANCE */
++#  define __DARWIN_SUF_UNIX03		/* nothing */
+ 
+ #  if __DARWIN_64_BIT_INO_T
+ #    if __DARWIN_ONLY_64_BIT_INO_T
+@@ -512,7 +508,11 @@
+  * long doubles.  This applies only to ppc; i386 already has long double
+  * support, while ppc64 doesn't have any backwards history.
+  */
+-#if   defined(__ppc__)
++#if   defined(__arm__)
++#  define	__DARWIN_LDBL_COMPAT(x)	/* nothing */
++#  define	__DARWIN_LDBL_COMPAT2(x) /* nothing */
++#  define	__DARWIN_LONG_DOUBLE_IS_DOUBLE	1
++#elif   defined(__ppc__)
+ #  if defined(__LDBL_MANT_DIG__) && defined(__DBL_MANT_DIG__) && \
+ 	__LDBL_MANT_DIG__ > __DBL_MANT_DIG__
+ #    if __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__-0 < 1040
