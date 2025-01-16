@@ -49,9 +49,14 @@ add_custom_target(cctools_port
 add_custom_command(
     TARGET cctools_port
     POST_BUILD
-    COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/cmake/scripts/cctool_symlinks.sh
+    COMMAND bash -c "for file in arm-apple-darwin10-*; do \
+                        target_name=\${file#arm-apple-darwin10-}; \
+                        mv \$file \$target_name; \
+                        echo \"Renamed binary: \$file -> \$target_name\"; \
+                    done"
     WORKING_DIRECTORY ${CCTOOLS_BUILD_PREFIX}/bin
-    COMMENT "Creating symlinks without prefix"
+    COMMENT "Removing prefix from tool binary names"
+    VERBATIM
 )
 
 install(
