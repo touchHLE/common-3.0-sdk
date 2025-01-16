@@ -1,7 +1,5 @@
 find_package(Python3 REQUIRED)
 
-file(MAKE_DIRECTORY ${SDK_PATH}/usr)
-
 set(VENV_DIR "${CMAKE_BINARY_DIR}/.venv")
 
 add_custom_command(

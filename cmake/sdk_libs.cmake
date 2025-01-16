@@ -1,5 +1,3 @@
-file(MAKE_DIRECTORY ${SDK_PATH}/usr/lib)
-
 install(
     DIRECTORY ${ALL_SOURCES}/oss-libs/
     DESTINATION ${SDK_PATH}/usr/lib
