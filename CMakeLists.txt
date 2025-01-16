@@ -16,6 +16,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/cctools_port.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/csu.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/sdk_libs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/libc_stub.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/licenses.cmake)
 
 add_custom_target(build_sdk ALL
     DEPENDS 
@@ -23,18 +24,4 @@ add_custom_target(build_sdk ALL
         build_cctools
         csu
         libsystem 
-)
-
-install(FILES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/licenses/MPL-2.0"
-    "${CMAKE_CURRENT_SOURCE_DIR}/licenses/APSL"
-    "${CMAKE_CURRENT_SOURCE_DIR}/licenses/GPL"
-    DESTINATION "${SDK_PATH}/licenses"
-    COMPONENT licenses
-)
-
-install(FILES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/README.md"
-    DESTINATION "${SDK_PATH}/"
-    COMPONENT licenses
 )
