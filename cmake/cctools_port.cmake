@@ -1,3 +1,5 @@
+set(CCTOOLS_SOURCE_DIR "${SOURCES}/cctools-port")
+set(CCTOOLS_BUILD_DIR "${CMAKE_BINARY_DIR}/cctools-build")
 set(CCTOOLS_BUILD_PREFIX "${CMAKE_BINARY_DIR}/cctools")
 set(CCTOOLS_PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/patches/cctools.patch")
 set(CCTOOLS_PATCH_STAMP "${CMAKE_BINARY_DIR}/cctools_patch.stamp")

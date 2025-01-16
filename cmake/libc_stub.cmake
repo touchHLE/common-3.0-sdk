@@ -1,3 +1,5 @@
+set(LIBC_STUB_SOURCE_DIR "${SOURCES}/libc-stub")
+
 set(RC_ARCHS "armv6;armv7")
 
 set(CMAKE_C_COMPILER clang)
@@ -23,7 +25,7 @@ add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/libSystem.B.dylib
     COMMAND ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS}
             -fno-builtin -nostdlib
-            ${ALL_SOURCES}/libc-stub/stub.c
+            ${LIBC_STUB_SOURCE_DIR}/stub.c
             -Wl,-install_name,/usr/lib/libSystem.B.dylib
             -Wl,-dylib
             -o ${CMAKE_BINARY_DIR}/libSystem.B.dylib

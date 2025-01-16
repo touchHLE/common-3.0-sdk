@@ -6,7 +6,7 @@ set(CMAKE_GENERATOR "Ninja")
 
 project(iPhoneOS3.0SDK)
 
-set(ALL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/sources")
+set(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/sources")
 set(CSU_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/sources/csu")
 set(HEADERS_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/sources/sdk-headers")
 set(SDK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/common-3.0.sdk")
