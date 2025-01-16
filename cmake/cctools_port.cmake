@@ -4,6 +4,9 @@ set(CCTOOLS_BUILD_PREFIX "${CMAKE_BINARY_DIR}/cctools")
 set(CCTOOLS_PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/patches/cctools.patch")
 set(CCTOOLS_PATCH_STAMP "${CMAKE_BINARY_DIR}/cctools_patch.stamp")
 
+file(MAKE_DIRECTORY ${CCTOOLS_BUILD_PREFIX})
+file(MAKE_DIRECTORY ${CCTOOLS_BUILD_DIR})
+
 add_custom_command(
     OUTPUT ${CCTOOLS_PATCH_STAMP}
     COMMAND bash -c "if patch -p1 --dry-run -i \"${CCTOOLS_PATCH_FILE}\" > /dev/null 2>&1; then \
@@ -18,16 +21,29 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(build_cctools
-    DEPENDS ${CCTOOLS_PATCH_STAMP}
+add_custom_command(
+    OUTPUT ${CCTOOLS_SOURCE_DIR}/cctools/configure
     COMMAND ./autogen.sh
-    COMMAND ./configure 
-        --prefix=${CCTOOLS_BUILD_PREFIX}
-        --target=arm-apple-darwin10
+    WORKING_DIRECTORY ${CCTOOLS_SOURCE_DIR}/cctools
+    COMMENT "Running cctools autogen.sh"
+    DEPENDS ${CCTOOLS_PATCH_STAMP}
+)
+
+add_custom_command(
+    OUTPUT ${CCTOOLS_BUILD_DIR}/config.status
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CCTOOLS_BUILD_DIR}
+    COMMAND ${CCTOOLS_SOURCE_DIR}/cctools/configure --prefix=${CCTOOLS_BUILD_PREFIX} --target=arm-apple-darwin10
+    WORKING_DIRECTORY ${CCTOOLS_BUILD_DIR}
+    COMMENT "Configuring cctools build environment"
+    DEPENDS ${CCTOOLS_SOURCE_DIR}/cctools/configure
+)
+
+add_custom_target(build_cctools
     COMMAND make
     COMMAND make install
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/sources/cctools-port/cctools
+    WORKING_DIRECTORY ${CCTOOLS_BUILD_DIR}
     COMMENT "Building cctools-port"
+    DEPENDS ${CCTOOLS_BUILD_DIR}/config.status
 )
 
 add_custom_command(
