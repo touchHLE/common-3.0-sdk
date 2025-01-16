@@ -4,7 +4,7 @@ set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_GENERATOR "Ninja")
 
-project(iPhoneOS3.0SDK)
+project(common-3.0-sdk)
 
 set(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/sources")
 set(CSU_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/sources/csu")
@@ -17,11 +17,3 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/csu.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/sdk_libs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/libc_stub.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/licenses.cmake)
-
-add_custom_target(build_sdk ALL
-    DEPENDS 
-        setup_headers
-        cctools_port
-        csu
-        libsystem 
-)
