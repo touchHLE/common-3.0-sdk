@@ -29,7 +29,7 @@ add_custom_target(setup_headers ALL
         --config ${HEADERS_SOURCE}/header_sources.yaml --patches ${HEADERS_SOURCE}/patches
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS install_requirements
-    COMMENT "Running Python script"
+    COMMENT "Extracting headers from OSS sources"
 )
 
 install(
