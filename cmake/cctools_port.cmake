@@ -1,15 +1,23 @@
 set(CCTOOLS_BUILD_PREFIX "${CMAKE_BINARY_DIR}/cctools")
+set(CCTOOLS_PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/patches/cctools.patch")
+set(CCTOOLS_PATCH_STAMP "${CMAKE_BINARY_DIR}/cctools_patch.stamp")
 
-file(MAKE_DIRECTORY ${SDK_PATH}/usr)
-
-add_custom_target(patch_cctools
-    COMMAND patch -p1 -N -i ${CMAKE_CURRENT_SOURCE_DIR}/patches/cctools.patch || true
+add_custom_command(
+    OUTPUT ${CCTOOLS_PATCH_STAMP}
+    COMMAND bash -c "if patch -p1 --dry-run -i \"${CCTOOLS_PATCH_FILE}\" > /dev/null 2>&1; then \
+                        patch -p1 -i \"${CCTOOLS_PATCH_FILE}\"; \
+                    else \
+                        echo \"Patch already applied or cannot be applied cleanly\"; \
+                    fi"
+    COMMAND ${CMAKE_COMMAND} -E touch "${CCTOOLS_PATCH_STAMP}"
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/sources/cctools-port
     COMMENT "Patching cctools-port"
+    DEPENDS ${CCTOOLS_PATCH_FILE}
+    VERBATIM
 )
 
 add_custom_target(build_cctools
-    DEPENDS patch_cctools
+    DEPENDS ${CCTOOLS_PATCH_STAMP}
     COMMAND ./autogen.sh
     COMMAND ./configure 
         --prefix=${CCTOOLS_BUILD_PREFIX}
