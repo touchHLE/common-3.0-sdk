@@ -4,6 +4,8 @@ xnu:
     xnu-1504.15.3:
       - source: bsd/sys
         dest: sys
+      - source: bsd/bsm
+        dest: bsm
       - source: EXTERNAL_HEADERS/architecture/byte_order.h
         dest: architecture/byte_order.h
       - source: osfmk/mach
