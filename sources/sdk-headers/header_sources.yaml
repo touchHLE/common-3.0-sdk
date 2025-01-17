@@ -53,18 +53,8 @@ libc:
   repo_url: https://github.com/apple-oss-distributions/Libc.git
   sources:
     Libc-498.1.7:
-      - source: include/stdlib.h
-        dest: stdlib.h
-      - source: include/_types.h
-        dest: _types.h
-      - source: include/alloca.h
-        dest: alloca.h
-      - source: include/string.h
-        dest: string.h
-      - source: include/stdio.h
-        dest: stdio.h
-      - source: include/errno.h
-        dest: errno.h
+      - source: include
+        dest: ""
 
 
 dyld:
