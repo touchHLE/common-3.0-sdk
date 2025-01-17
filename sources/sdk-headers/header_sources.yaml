@@ -63,3 +63,16 @@ dyld:
     main:
       - source: include/dlfcn.h
         dest: dlfcn.h
+
+pthread:
+  repo_url: https://github.com/apple-oss-distributions/libpthread.git
+  sources:
+    libpthread-105.1.4:
+      - source: pthread/pthread.h
+        dest: pthread.h
+      - source: pthread/pthread_impl.h
+        dest: pthread_impl.h
+      - source: pthread/sched.h
+        dest: sched.h
+      - source: sys/_pthread
+        dest: sys/_pthread

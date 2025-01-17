@@ -1,0 +1,27 @@
+diff --git a/pthread.h b/pthread.h
+index 4169176..2c639b0 100644
+--- a/pthread.h
++++ b/pthread.h
+@@ -54,11 +54,10 @@
+ 
+ #include <_types.h>
+ #ifndef __POSIX_LIB__
+-#include <pthread/pthread_impl.h>
++#include <pthread_impl.h>
+ #endif
+-#include <pthread/sched.h>
++#include <sched.h>
+ #include <time.h>
+-#include <sys/_pthread/_pthread_types.h>
+ #include <sys/_pthread/_pthread_attr_t.h>
+ #include <sys/_pthread/_pthread_cond_t.h>
+ #include <sys/_pthread/_pthread_condattr_t.h>
+@@ -70,8 +69,6 @@
+ #include <sys/_pthread/_pthread_rwlockattr_t.h>
+ #include <sys/_pthread/_pthread_t.h>
+ 
+-#include <pthread/qos.h>
+-
+ #if (!defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE)) || defined(_DARWIN_C_SOURCE)
+ 
+ #include <sys/_types/_mach_port_t.h>
