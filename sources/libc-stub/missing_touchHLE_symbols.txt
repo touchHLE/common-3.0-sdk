@@ -1,0 +1,13 @@
+_strerror
+__DefaultRuneLocale
+___maskrune
+_fsctl
+_srandomdev
+_confstr
+_strlcat
+_pwrite
+_utimes
+_pread
+_fchmod
+_dlerror
+_fsync

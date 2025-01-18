@@ -699,3 +699,16 @@ void NSStringFromCGRect() {}
 void UIGraphicsPushContext() {}
 void UIGraphicsPopContext() {}
 void UIGraphicsGetCurrentContext() {}
+void strerror() {}
+void _DefaultRuneLocale() {}
+void __maskrune() {}
+void fsctl() {}
+void srandomdev() {}
+void confstr() {}
+void strlcat() {}
+void pwrite() {}
+void utimes() {}
+void pread() {}
+void fchmod() {}
+void dlerror() {}
+void fsync() {}
