@@ -18,7 +18,6 @@ __keymgr_get_and_lock_processwide_ptr_2
 __keymgr_get_and_lock_processwide_ptr
 __keymgr_set_and_unlock_processwide_ptr
 __keymgr_unlock_processwide_ptr
-_gethostbyname
 _mach_host_self
 _host_page_size
 _host_statistics
@@ -540,15 +539,8 @@ _alGetProcAddress
 _alGetString
 _alIsExtensionPresent
 _alIsEnabled
-_alListenerfv
-_alListeneri
-_alGetListenerf
-_alGetListener3f
-_alGetListenerfv
-_alGetListeneri
 _alIsSource
 _alSourcePlayv
-_alSourcePause
 _alSourcePausev
 _alSourceStopv
 _alSourceRewindv

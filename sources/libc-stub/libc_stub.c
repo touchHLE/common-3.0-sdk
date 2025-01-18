@@ -18,7 +18,6 @@ void _keymgr_get_and_lock_processwide_ptr_2() {}
 void _keymgr_get_and_lock_processwide_ptr() {}
 void _keymgr_set_and_unlock_processwide_ptr() {}
 void _keymgr_unlock_processwide_ptr() {}
-void gethostbyname() {}
 void mach_host_self() {}
 void host_page_size() {}
 void host_statistics() {}
@@ -540,15 +539,8 @@ void alGetProcAddress() {}
 void alGetString() {}
 void alIsExtensionPresent() {}
 void alIsEnabled() {}
-void alListenerfv() {}
-void alListeneri() {}
-void alGetListenerf() {}
-void alGetListener3f() {}
-void alGetListenerfv() {}
-void alGetListeneri() {}
 void alIsSource() {}
 void alSourcePlayv() {}
-void alSourcePause() {}
 void alSourcePausev() {}
 void alSourceStopv() {}
 void alSourceRewindv() {}
