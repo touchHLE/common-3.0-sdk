@@ -62,5 +62,6 @@ add_custom_command(
 install(
     DIRECTORY ${CCTOOLS_BUILD_PREFIX}/
     DESTINATION ${SDK_PATH}/usr
+    USE_SOURCE_PERMISSIONS
     COMPONENT cctools
 )
