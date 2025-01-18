@@ -10,8 +10,7 @@ set(BASE_C_FLAGS
     -I${CMAKE_BINARY_DIR}/include
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/libSystem.B.dylib
+add_custom_target(libsystem ALL
     COMMAND ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS}
             -fno-builtin -nostdlib
             ${LIBC_STUB_SOURCE_DIR}/libc_stub.c
@@ -19,11 +18,7 @@ add_custom_command(
             -Wl,-dylib
             -o ${CMAKE_BINARY_DIR}/libSystem.B.dylib
     DEPENDS setup_headers
-    COMMENT libSystem.B.dylib
-)
-
-add_custom_target(libsystem ALL 
-    DEPENDS ${CMAKE_BINARY_DIR}/libSystem.B.dylib
+    COMMENT "Building libSystem.B.dylib"
 )
 
 install(FILES
