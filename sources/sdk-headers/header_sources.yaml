@@ -78,3 +78,13 @@ pthread:
         dest: sched.h
       - source: sys/_pthread
         dest: sys/_pthread
+
+corefoundation:
+  repo_url: https://github.com/apple-oss-distributions/CF.git
+  sources:
+    CF-550.42:
+      - source: .
+        dest: CoreFoundation
+    CF-1153.18:
+      - source: TargetConditionals.h
+        dest: ""
