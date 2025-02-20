@@ -4,10 +4,10 @@ index c1e1590..869bf3d 100644
 +++ b/CoreFoundation/CFBase.h
 @@ -64,7 +64,7 @@
  #include <AvailabilityMacros.h>
- 
+
  #if (TARGET_OS_MAC && !(TARGET_OS_EMBEDDED || TARGET_OS_IPHONE)) || (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE)
 -#include <libkern/OSTypes.h>
 +// #include <libkern/OSTypes.h>
  #endif
- 
+
  #if !defined(__MACTYPES__)
