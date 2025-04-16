@@ -74,3 +74,25 @@ index 57092be..db9bd10 100644
    enum bool verbose;
    /* Relocation information.  */
    struct relocation_info *sorted_relocs;
+diff --git a/cctools/configure.ac b/cctools/configure.ac
+index b30936c..356c660 100644
+--- a/cctools/configure.ac
++++ b/cctools/configure.ac
+@@ -113,13 +113,15 @@ CXXVERSION="`$CXX --version`"
+
+ case "$CCVERSION" in
+   *clang* )
+-    WARNINGS="$WARNINGS -Wall -Wno-long-long -Wno-import -Wno-format -Wno-deprecated -Wno-unused-variable"
++    WARNINGS="$WARNINGS -Wall -Wno-long-long -Wno-import -Wno-format -Wno-format-security -Wno-deprecated -Wno-unused-variable"
+     WARNINGS="$WARNINGS -Wno-unused-private-field -Wno-unused-function -Wno-invalid-offsetof"
+     WARNINGS="$WARNINGS -Wno-int-conversion -Wno-char-subscripts"
+     OBJCWARNINGS="-Wall -Wno-objc-root-class -Wno-deprecated-objc-isa-usage"
++    CFLAGS="$CFLAGS -std=gnu99 -D__private_extern__="
++    CXXFLAGS="$CXXFLAGS -D__private_extern__="
+   ;;
+   * )
+-    WARNINGS="$WARNINGS -Wall -Wno-format -Wno-enum-compare -Wno-unused-result -Wno-unused-variable"
++    WARNINGS="$WARNINGS -Wall -Wno-format -Wno-format-security -Wno-enum-compare -Wno-unused-result -Wno-unused-variable"
+     WARNINGS="$WARNINGS -Wno-unused-but-set-variable -Wno-deprecated -Wno-deprecated-declarations"
+     WARNINGS="$WARNINGS -Wno-char-subscripts -Wno-strict-aliasing"
+     OBJCWARNINGS="-Wall"

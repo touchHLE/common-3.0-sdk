@@ -25,3 +25,11 @@ install(FILES
     ${CMAKE_BINARY_DIR}/libSystem.B.dylib
     DESTINATION ${SDK_PATH}/usr/lib
 )
+
+# Also install as libSystem.dylib.
+# Ideally, this would be symlinked but that's flaky on windows.
+install(FILES
+    ${CMAKE_BINARY_DIR}/libSystem.B.dylib
+    DESTINATION ${SDK_PATH}/usr/lib
+    RENAME libSystem.dylib
+)
