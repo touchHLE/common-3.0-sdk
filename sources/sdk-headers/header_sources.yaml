@@ -11,21 +11,25 @@ xnu:
       - source: osfmk/mach
         dest: mach
     xnu-1699.32.7:
+      - source: EXTERNAL_HEADERS/stdint.h
+        dest: stdint.h
+    xnu-4570.1.46:
       - source: EXTERNAL_HEADERS/Availability.h
         dest: Availability.h
       - source: EXTERNAL_HEADERS/AvailabilityMacros.h
         dest: AvailabilityMacros.h
       - source: EXTERNAL_HEADERS/AvailabilityInternal.h
         dest: AvailabilityInternal.h
-      - source: EXTERNAL_HEADERS/stdint.h
-        dest: stdint.h
-    xnu-4570.1.46:
       - source: bsd/arm
         dest: arm
       - source: osfmk/arm/arch.h
         dest: arm/arch.h
       - source: bsd/sys/_types
         dest: sys/_types
+      - source: bsd/netinet
+        dest: netinet
+      - source: bsd/netinet6
+        dest: netinet6
       - source: libkern/libkern/arm/OSByteOrder.h
         dest: libkern/arm/OSByteOrder.h
       - source: libkern/libkern/OSByteOrder.h
@@ -57,6 +61,9 @@ libc:
     Libc-498.1.7:
       - source: include
         dest: ""
+    Libc-997.1.1:
+      - source: include/arpa
+        dest: arpa
 
 
 dyld:
