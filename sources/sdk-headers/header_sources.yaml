@@ -97,3 +97,10 @@ libm:
         dest: math.h
       - source: Source/ARM/math.h
         dest: architecture/arm/math.h
+
+libplatform:
+  repo_url: https://github.com/apple-oss-distributions/libplatform.git
+  sources:
+    libplatform-126.1.2:
+      - source: include/setjmp.h
+        dest: setjmp.h
