@@ -1,6 +1,4 @@
 _strerror
-__DefaultRuneLocale
-___maskrune
 _fsctl
 _srandomdev
 _confstr
