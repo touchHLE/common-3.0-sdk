@@ -69,7 +69,7 @@ libc:
 dyld:
   repo_url: https://github.com/apple-oss-distributions/dyld.git
   sources:
-    main:
+    dyld-1162:
       - source: include/dlfcn.h
         dest: dlfcn.h
 
