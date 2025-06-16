@@ -4,5 +4,4 @@
 	branch = tags/Csu-85
 [submodule "sources/cctools-port"]
 	path = sources/cctools-port
-	url = https://github.com/tpoechtrager/cctools-port.git
-	ignore = dirty
+	url = https://github.com/touchHLE/cctools-port.git
