@@ -61,6 +61,7 @@ jobs:
           git
           mingw-w64-ucrt-x86_64-cmake
           mingw-w64-ucrt-x86_64-clang
+          mingw-w64-ucrt-x86_64-dlfcn
           mingw-w64-ucrt-x86_64-llvm
           mingw-w64-ucrt-x86_64-libblocksruntime-swift
 
