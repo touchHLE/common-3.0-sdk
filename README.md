@@ -27,7 +27,7 @@ GNU libgcc Library
 
 MMAN-WIN32 (Windows builds only)
 - Licensed under MIT License
-- Full license text in `licenses/MIT.mman
+- Full license text in `licenses/MIT.mman`
 - Provides POSIX mmap functionality on Windows
 
 ## Important disclaimer

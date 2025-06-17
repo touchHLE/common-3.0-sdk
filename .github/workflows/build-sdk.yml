@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,15 +30,62 @@ jobs:
       run: cmake --install ${{github.workspace}}/build
 
     - name: Bundle SDK
-      run: tar -czf common-3.0.sdk.tar.gz common-3.0.sdk/
+      run: tar -czf common-3.0.sdk-linux-x86_64.tar.gz common-3.0.sdk/
 
     - uses: actions/upload-artifact@v4
       with:
-        name: common-3.0-sdk
+        name: common-3.0-sdk-linux-x86_64
         path: common-3.0.sdk
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: common-3.0.sdk.tar.gz
+        files: common-3.0.sdk-linux-x86_64.tar.gz
+  
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: UCRT64
+        update: true
+        install: >-
+          git
+          mingw-w64-ucrt-x86_64-cmake
+          mingw-w64-ucrt-x86_64-clang
+          mingw-w64-ucrt-x86_64-llvm
+          mingw-w64-ucrt-x86_64-libblocksruntime-swift
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build
+      env:
+        CC: clang
+        CXX: clang++
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build
+
+    - name: Create SDK
+      run: cmake --install ${{github.workspace}}/build
+
+    - name: Bundle SDK
+      run: tar -czf common-3.0.sdk-windows-x86_64.tar.gz common-3.0.sdk/
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: common-3.0-sdk-windows-x86_64
+        path: common-3.0.sdk
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: common-3.0.sdk-windows-x86_64.tar.gz
