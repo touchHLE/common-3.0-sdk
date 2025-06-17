@@ -2,6 +2,12 @@ find_package(Python3 REQUIRED)
 
 set(VENV_DIR "${CMAKE_BINARY_DIR}/.venv")
 
+if(WIN32)
+    set(VENV_BIN_DIR "${VENV_DIR}/Scripts")
+else()
+    set(VENV_BIN_DIR "${VENV_DIR}/bin")
+endif()
+
 add_custom_command(
     OUTPUT ${VENV_DIR}/pyvenv.cfg
     COMMAND ${Python3_EXECUTABLE} -m venv ${VENV_DIR}
@@ -14,7 +20,7 @@ message(STATUS "HEADERS_SOURCE before include: ${HEADERS_SOURCE}")
 
 add_custom_command(
     OUTPUT ${VENV_DIR}/requirements_installed
-    COMMAND ${VENV_DIR}/bin/pip install -r ${HEADERS_SOURCE}/requirements.txt
+    COMMAND ${VENV_BIN_DIR}/pip install -r ${HEADERS_SOURCE}/requirements.txt
     COMMAND ${CMAKE_COMMAND} -E touch ${VENV_DIR}/requirements_installed
     DEPENDS venv ${HEADERS_SOURCE}/requirements.txt
     COMMENT "Installing Python requirements"
@@ -29,7 +35,7 @@ add_custom_target(
     setup_headers
     ALL
     COMMAND
-        ${VENV_DIR}/bin/python ${HEADERS_SOURCE}/extract_ios_headers.py --config
+        ${VENV_BIN_DIR}/python ${HEADERS_SOURCE}/extract_ios_headers.py --config
         ${HEADERS_SOURCE}/header_sources.yaml --patches
         ${HEADERS_SOURCE}/patches
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
