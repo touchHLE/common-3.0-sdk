@@ -14,3 +14,9 @@ ExternalProject_Add(cctools_port
         -DCMAKE_INSTALL_PREFIX=${CCTOOLS_BUILD_PREFIX}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 )
+
+install(DIRECTORY
+    ${CMAKE_BINARY_DIR}/cctools/bin/
+    DESTINATION ${SDK_PATH}/usr/bin
+    USE_SOURCE_PERMISSIONS
+)
