@@ -25,6 +25,11 @@ GNU libgcc Library
 - Licensed under GNU GPLv2 or later
 - Full license text in `licenses/GPL`
 
+MMAN-WIN32 (Windows builds only)
+- Licensed under MIT License
+- Full license text in `licenses/MIT.mman
+- Provides POSIX mmap functionality on Windows
+
 ## Important disclaimer
 
 This project is not affiliated with or endorsed by Apple Inc in any way. iPhone, iOS, iPod, iPod touch and iPad are trademarks of Apple Inc in the United States and other countries.

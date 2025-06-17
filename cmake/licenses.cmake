@@ -11,3 +11,11 @@ install(FILES
     DESTINATION "${SDK_PATH}/"
     COMPONENT licenses
 )
+
+if(WIN32)
+    install(FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/licenses/MIT.mman"
+        DESTINATION "${SDK_PATH}/licenses"
+        COMPONENT licenses
+    )
+endif()
