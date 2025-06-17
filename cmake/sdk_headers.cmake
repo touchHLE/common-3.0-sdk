@@ -39,7 +39,7 @@ add_custom_command(
         ${HEADERS_SOURCE}/patches
     COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/headers_extracted
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    DEPENDS 
+    DEPENDS
         install_requirements
         ${HEADERS_SOURCE}/header_sources.yaml
         ${HEADERS_SOURCE}/extract_ios_headers.py
@@ -47,7 +47,8 @@ add_custom_command(
 )
 
 add_custom_target(
-    setup_headers ALL
+    setup_headers
+    ALL
     DEPENDS ${CMAKE_BINARY_DIR}/headers_extracted
 )
 
