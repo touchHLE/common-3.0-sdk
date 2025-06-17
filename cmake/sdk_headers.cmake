@@ -31,20 +31,28 @@ add_custom_target(
     DEPENDS ${VENV_DIR}/requirements_installed
 )
 
-add_custom_target(
-    setup_headers
-    ALL
+add_custom_command(
+    OUTPUT ${CMAKE_BINARY_DIR}/headers_extracted
     COMMAND
         ${VENV_BIN_DIR}/python ${HEADERS_SOURCE}/extract_ios_headers.py --config
         ${HEADERS_SOURCE}/header_sources.yaml --patches
         ${HEADERS_SOURCE}/patches
+    COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/headers_extracted
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    DEPENDS install_requirements
+    DEPENDS 
+        install_requirements
+        ${HEADERS_SOURCE}/header_sources.yaml
+        ${HEADERS_SOURCE}/extract_ios_headers.py
     COMMENT "Extracting headers from OSS sources"
+)
+
+add_custom_target(
+    setup_headers ALL
+    DEPENDS ${CMAKE_BINARY_DIR}/headers_extracted
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include
     DESTINATION ${SDK_PATH}/usr
-    COMPONENT headesr
+    COMPONENT headers
 )
