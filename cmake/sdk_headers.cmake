@@ -20,11 +20,18 @@ add_custom_command(
     COMMENT "Installing Python requirements"
 )
 
-add_custom_target(install_requirements DEPENDS ${VENV_DIR}/requirements_installed)
+add_custom_target(
+    install_requirements
+    DEPENDS ${VENV_DIR}/requirements_installed
+)
 
-add_custom_target(setup_headers ALL
-    COMMAND ${VENV_DIR}/bin/python ${HEADERS_SOURCE}/extract_ios_headers.py 
-        --config ${HEADERS_SOURCE}/header_sources.yaml --patches ${HEADERS_SOURCE}/patches
+add_custom_target(
+    setup_headers
+    ALL
+    COMMAND
+        ${VENV_DIR}/bin/python ${HEADERS_SOURCE}/extract_ios_headers.py --config
+        ${HEADERS_SOURCE}/header_sources.yaml --patches
+        ${HEADERS_SOURCE}/patches
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS install_requirements
     COMMENT "Extracting headers from OSS sources"

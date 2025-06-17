@@ -4,7 +4,8 @@ set(CCTOOLS_BUILD_PREFIX "${CMAKE_BINARY_DIR}/cctools")
 
 include(ExternalProject)
 
-ExternalProject_Add(cctools_port
+ExternalProject_Add(
+    cctools_port
     SOURCE_DIR ${CCTOOLS_SOURCE_DIR}
     BINARY_DIR ${CCTOOLS_BUILD_DIR}
     INSTALL_DIR ${CCTOOLS_BUILD_PREFIX}
@@ -15,8 +16,8 @@ ExternalProject_Add(cctools_port
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 )
 
-install(DIRECTORY
-    ${CMAKE_BINARY_DIR}/cctools/bin/
+install(
+    DIRECTORY ${CMAKE_BINARY_DIR}/cctools/bin/
     DESTINATION ${SDK_PATH}/usr/bin
     USE_SOURCE_PERMISSIONS
 )
