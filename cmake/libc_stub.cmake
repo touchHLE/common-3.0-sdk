@@ -1,6 +1,6 @@
-set(LIBC_STUB_SOURCE_DIR "${SOURCES}/libc-stub")
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
 
-set(ARCH_FLAGS -arch armv6 -arch armv7)
+set(LIBC_STUB_SOURCE_DIR "${SOURCES}/libc-stub")
 
 set(CMAKE_C_COMPILER clang)
 set(BASE_C_FLAGS
@@ -10,15 +10,11 @@ set(BASE_C_FLAGS
     -I${CMAKE_BINARY_DIR}/include
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/libSystem.B.dylib
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} -fno-builtin
-        -nostdlib ${LIBC_STUB_SOURCE_DIR}/libc_stub.c
-        -Wl,-install_name,/usr/lib/libSystem.B.dylib -Wl,-dylib -o
-        ${CMAKE_BINARY_DIR}/libSystem.B.dylib
-    DEPENDS setup_headers cctools_port ${LIBC_STUB_SOURCE_DIR}/libc_stub.c
-    COMMENT "Building libSystem.B.dylib"
+build_universal_component(libSystem.B.dylib
+    "${BASE_C_FLAGS};-fno-builtin;-nostdlib;-miphoneos-version-min=2.0"
+    "-install_name;/usr/lib/libSystem.B.dylib;-dylib;-ios_version_min;3.0"
+    "${LIBC_STUB_SOURCE_DIR}/libc_stub.c"
+    DEPENDS setup_headers cctools_port
 )
 
 add_custom_target(libsystem ALL DEPENDS ${CMAKE_BINARY_DIR}/libSystem.B.dylib)

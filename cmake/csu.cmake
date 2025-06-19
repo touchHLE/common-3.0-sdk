@@ -1,124 +1,88 @@
-set(ARCH_FLAGS -arch armv6 -arch armv7)
-set(OFLAG -Os)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
 
+set(OFLAG -Os)
 set(CMAKE_C_COMPILER clang)
 set(BASE_C_FLAGS
     ${OFLAG}
     -Wall
     --target=arm-apple-ios
-    -B${CCTOOLS_BUILD_PREFIX}/bin
     -I${CMAKE_BINARY_DIR}/include
     -Wno-expansion-to-defined
 )
 
+set(OS_MIN_V1 -miphoneos-version-min=2.0)
 set(OS_MIN_V2 -miphoneos-version-min=2.0)
 set(OS_MIN_V3 -miphoneos-version-min=2.0)
 set(OS_MIN_V4 -miphoneos-version-min=3.1)
 
-set(USRLIBDIR /usr/lib)
-set(LOCLIBDIR /usr/local/lib)
-
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/crt1.v1.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V1}
-        -mdynamic-no-pic -nostdlib -keep_private_externs ${CSU_SOURCE}/start.s
-        ${CSU_SOURCE}/crt.c ${CSU_SOURCE}/dyld_glue.s -o
-        ${CMAKE_BINARY_DIR}/crt1.v1.o -DCRT -DOLD_LIBSYSTEM_SUPPORT
+build_universal_component(crt1.v1.o
+    "${BASE_C_FLAGS};-mdynamic-no-pic;-nostdlib;-DCRT;-DOLD_LIBSYSTEM_SUPPORT;${OS_MIN_V1}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/start.s;${CSU_SOURCE}/crt.c;${CSU_SOURCE}/dyld_glue.s"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building crt1.v1.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/crt1.v2.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V3}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/start.s
-        ${CSU_SOURCE}/crt.c ${CSU_SOURCE}/dyld_glue.s -o
-        ${CMAKE_BINARY_DIR}/crt1.v2.o -DCRT
+build_universal_component(crt1.v2.o
+    "${BASE_C_FLAGS};-nostdlib;-DCRT;${OS_MIN_V3}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/start.s;${CSU_SOURCE}/crt.c;${CSU_SOURCE}/dyld_glue.s"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building crt1.v2.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/crt1.v3.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V2}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/start.s
-        ${CSU_SOURCE}/crt.c -o ${CMAKE_BINARY_DIR}/crt1.v3.o -DADD_PROGRAM_VARS
+build_universal_component(crt1.v3.o
+    "${BASE_C_FLAGS};-nostdlib;-DADD_PROGRAM_VARS;${OS_MIN_V2}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/start.s;${CSU_SOURCE}/crt.c"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building crt1.v3.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/crt1.v4.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V4}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/start.s
-        ${CSU_SOURCE}/crt.c -o ${CMAKE_BINARY_DIR}/crt1.v4.o -DADD_PROGRAM_VARS
+build_universal_component(crt1.v4.o
+    "${BASE_C_FLAGS};-nostdlib;-DADD_PROGRAM_VARS;${OS_MIN_V4}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/start.s;${CSU_SOURCE}/crt.c"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building crt1.v4.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/gcrt1.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V1}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/start.s
-        ${CSU_SOURCE}/crt.c ${CSU_SOURCE}/dyld_glue.s -o
-        ${CMAKE_BINARY_DIR}/gcrt1.o -DGCRT -DOLD_LIBSYSTEM_SUPPORT
+build_universal_component(gcrt1.o
+    "${BASE_C_FLAGS};-nostdlib;-DGCRT;-DOLD_LIBSYSTEM_SUPPORT;${OS_MIN_V1}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/start.s;${CSU_SOURCE}/crt.c;${CSU_SOURCE}/dyld_glue.s"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building gcrt1.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/crt0.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} -static
-        -Wl,-new_linker -nostdlib -keep_private_externs ${CSU_SOURCE}/start.s
-        ${CSU_SOURCE}/crt.c -o ${CMAKE_BINARY_DIR}/crt0.o
+build_universal_component(crt0.o
+    "${BASE_C_FLAGS};-static;-nostdlib"
+    "-keep_private_externs;-new_linker"
+    "${CSU_SOURCE}/start.s;${CSU_SOURCE}/crt.c"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building crt0.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/dylib1.v1.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V1}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/dyld_glue.s
-        ${CSU_SOURCE}/icplusplus.c -o ${CMAKE_BINARY_DIR}/dylib1.v1.o -DCFM_GLUE
+build_universal_component(dylib1.v1.o
+    "${BASE_C_FLAGS};-nostdlib;-DCFM_GLUE;${OS_MIN_V1}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/dyld_glue.s;${CSU_SOURCE}/icplusplus.c"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building dylib1.v1.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/dylib1.v2.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V2}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/dyld_glue.s -o
-        ${CMAKE_BINARY_DIR}/dylib1.v2.o -DCFM_GLUE
+build_universal_component(dylib1.v2.o
+    "${BASE_C_FLAGS};-nostdlib;-DCFM_GLUE;${OS_MIN_V2}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/dyld_glue.s"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building dylib1.v2.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/bundle1.v1.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V1}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/dyld_glue.s -o
-        ${CMAKE_BINARY_DIR}/bundle1.v1.o
+build_universal_component(bundle1.v1.o
+    "${BASE_C_FLAGS};-nostdlib;${OS_MIN_V1}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/dyld_glue.s"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building bundle1.v1.o"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/lazydylib1.o
-    COMMAND
-        ${CMAKE_C_COMPILER} -r ${ARCH_FLAGS} ${BASE_C_FLAGS} ${OS_MIN_V3}
-        -nostdlib -keep_private_externs ${CSU_SOURCE}/lazy_dylib_helper.s
-        ${CSU_SOURCE}/lazy_dylib_loader.c -o ${CMAKE_BINARY_DIR}/lazydylib1.o
+build_universal_component(lazydylib1.o
+    "${BASE_C_FLAGS};-nostdlib;${OS_MIN_V3}"
+    "-keep_private_externs"
+    "${CSU_SOURCE}/lazy_dylib_helper.s;${CSU_SOURCE}/lazy_dylib_loader.c"
     DEPENDS setup_headers cctools_port
-    COMMENT "Building lazydylib1.o"
 )
 
 add_custom_target(
