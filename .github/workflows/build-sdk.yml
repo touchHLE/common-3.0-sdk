@@ -64,7 +64,6 @@ jobs:
           mingw-w64-ucrt-x86_64-clang
           mingw-w64-ucrt-x86_64-dlfcn
           mingw-w64-ucrt-x86_64-llvm
-          mingw-w64-ucrt-x86_64-libblocksruntime-swift
 
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build

@@ -1,9 +1,9 @@
 install(
     FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/licenses/MPL-2.0"
-        "${CMAKE_CURRENT_SOURCE_DIR}/licenses/APSL"
-        "${CMAKE_CURRENT_SOURCE_DIR}/licenses/GPL"
-    DESTINATION "${SDK_PATH}/licenses"
+        "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/MPL-2.0"
+        "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/APSL"
+        "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/GPLv2"
+    DESTINATION "${SDK_PATH}/LICENSES"
     COMPONENT licenses
 )
 
@@ -15,8 +15,13 @@ install(
 
 if(WIN32)
     install(
-        FILES "${CMAKE_CURRENT_SOURCE_DIR}/licenses/MIT.mman"
-        DESTINATION "${SDK_PATH}/licenses"
+        FILES
+            "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/MIT.mman"
+            "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/COPYING.dlfcn"
+            "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/COPYING.libc++"
+            "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/COPYING.libgcc"
+            "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/COPYING.winpthreads"
+        DESTINATION "${SDK_PATH}/LICENSES"
         COMPONENT licenses
     )
 endif()
