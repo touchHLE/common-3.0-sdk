@@ -13,39 +13,44 @@
 
 This SDK contains components under multiple licenses:
 
-CMake Build System and Custom Components
-- Licensed under Mozilla Public License 2.0
-- Full license text in `licenses/MPL-2.0`
+### Build System and Custom Components
+- This includes CMake Scripts and Header Extraction Scripts
+- License: MPL 2.0 (see `licenses/MPL-2.0`)
 
-Apple OSS Headers and Components
-- Licensed under Apple Public Source License
-- Full license text in `licenses/APSL`
+### Apple Open Source Components
+- This includes cctools-port, csu and headers from several apple open source libraries
+- License: APSL (see `licenses/APSL`)
 
-GNU libgcc Library
+### GNU libgcc Library
 - Licensed under GNU GPLv2 or later
-- Full license text in `licenses/GPLv2`
+- License: GPLv2 (see `licenses/GPLv2`)
 
-### Windows Builds Only
+### Build Dependencies
+The following libraries are used for building but are not included in the SDK:
 
-MMAN-WIN32
-- Licensed under MIT License
-- Full license text in `licenses/COPYING.mman`
+**pygit2**
+- License: GPLv2 with linking exception (see [pypi](https://pypi.org/project/pygit2/))
 
-dlfcn
-- Licensed under MIT License
-- Full license text in `licenses/COPYING.dlfcn`
+**PyYAML**
+- License: MIT (see [pypi](https://pypi.org/project/PyYAML/))
 
-libstdc++
-- Licensed under GPL-3.0-or-later with the GCC-exception-3.1
-- Full license text in `licenses/COPYING.libc++`
+### Windows-Specific Components
+The following additional components are only included in Windows builds:
 
-libgcc
-- Licensed under GPL-3.0-or-later with the GCC-exception-3.1
-- Full license text in `licenses/COPYING.libgcc`
+**mman-win32**
+- License: MIT (see `licenses/COPYING.mman`)
 
-winpthreads
-- Licensed under MIT License and BSD Style License
-- Full license text in `licenses/COPYING.winpthreads`
+**dlfcn-win32**
+- License: MIT (see `licenses/COPYING.dlfcn`)
+
+**libstdc++**
+- License: GPL-3.0-or-later with the GCC-exception-3.1 (see `licenses/COPYING.libc++`)
+
+**libgcc**
+- License: GPL-3.0-or-later with the GCC-exception-3.1 (see `licenses/COPYING.libgcc`)
+
+**winpthreads**
+- License: MIT and BSD Style License (see `licenses/COPYING.winpthreads`)
 
 ## Important disclaimer
 
