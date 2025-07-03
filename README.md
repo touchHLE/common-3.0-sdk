@@ -29,7 +29,7 @@ GNU libgcc Library
 
 MMAN-WIN32
 - Licensed under MIT License
-- Full license text in `licenses/MIT.mman`
+- Full license text in `licenses/COPYING.mman`
 
 dlfcn
 - Licensed under MIT License

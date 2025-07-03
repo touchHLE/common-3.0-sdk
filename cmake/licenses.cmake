@@ -16,7 +16,7 @@ install(
 if(WIN32)
     install(
         FILES
-            "${CMAKE_CURRENT_SOURCE_DIR}/licenses/MIT.mman"
+            "${CMAKE_CURRENT_SOURCE_DIR}/licenses/COPYING.mman"
             "${CMAKE_CURRENT_SOURCE_DIR}/licenses/COPYING.dlfcn"
             "${CMAKE_CURRENT_SOURCE_DIR}/licenses/COPYING.libc++"
             "${CMAKE_CURRENT_SOURCE_DIR}/licenses/COPYING.libgcc"
