@@ -15,37 +15,37 @@ This SDK contains components under multiple licenses:
 
 CMake Build System and Custom Components
 - Licensed under Mozilla Public License 2.0
-- Full license text in `LICENSES/MPL-2.0`
+- Full license text in `licenses/MPL-2.0`
 
 Apple OSS Headers and Components
 - Licensed under Apple Public Source License
-- Full license text in `LICENSES/APSL`
+- Full license text in `licenses/APSL`
 
 GNU libgcc Library
 - Licensed under GNU GPLv2 or later
-- Full license text in `LICENSES/GPLv2`
+- Full license text in `licenses/GPLv2`
 
 ### Windows Builds Only
 
 MMAN-WIN32
 - Licensed under MIT License
-- Full license text in `LICENSES/MIT.mman`
+- Full license text in `licenses/MIT.mman`
 
 dlfcn
 - Licensed under MIT License
-- Full license text in `LICENSES/COPYING.dlfcn`
+- Full license text in `licenses/COPYING.dlfcn`
 
 libstdc++
 - Licensed under GPL-3.0-or-later with the GCC-exception-3.1
-- Full license text in `LICENSES/COPYING.libc++`
+- Full license text in `licenses/COPYING.libc++`
 
 libgcc
 - Licensed under GPL-3.0-or-later with the GCC-exception-3.1
-- Full license text in `LICENSES/COPYING.libgcc`
+- Full license text in `licenses/COPYING.libgcc`
 
 winpthreads
 - Licensed under MIT License and BSD Style License
-- Full license text in `LICENSES/COPYING.winpthreads`
+- Full license text in `licenses/COPYING.winpthreads`
 
 ## Important disclaimer
 
