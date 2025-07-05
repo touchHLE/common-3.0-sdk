@@ -16,8 +16,6 @@ add_custom_command(
 
 add_custom_target(venv DEPENDS ${VENV_DIR}/pyvenv.cfg)
 
-message(STATUS "HEADERS_SOURCE before include: ${HEADERS_SOURCE}")
-
 add_custom_command(
     OUTPUT ${VENV_DIR}/requirements_installed
     COMMAND ${VENV_BIN_DIR}/pip install -r ${HEADERS_SOURCE}/requirements.txt
