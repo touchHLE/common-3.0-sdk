@@ -22,7 +22,6 @@ This SDK contains components under multiple licenses:
 - License: APSL (see `licenses/APSL`)
 
 ### GNU libgcc Library
-- Licensed under GNU GPLv2 or later
 - License: GPLv2 (see `licenses/GPLv2`)
 
 ### Build Dependencies
