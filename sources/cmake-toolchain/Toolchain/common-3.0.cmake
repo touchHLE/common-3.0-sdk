@@ -6,16 +6,17 @@ set(CMAKE_SYSTEM_VERSION 3.0)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
 set(CMAKE_C_COMPILER clang)
+
 set(CMAKE_C_COMPILER_TARGET arm-apple-ios3.0)
 
-set(CMAKE_LINKER ${SDK_PATH}/usr/bin/ld)
-set(LIPO ${SDK_PATH}/usr/bin/lipo)
+if(NOT CMAKE_ARCHITECTURES)
+    set(CMAKE_ARCHITECTURES "armv6;armv7")
+endif()
 
-set(CMAKE_OSX_SYSROOT ${SDK_PATH}) # Does not seem to work
-set(CMAKE_OSX_ARCHITECTURES armv6 armv7)
-set(CMAKE_OSX_DEPLOYMENT_TARGET 3.0)
-set(CMAKE_C_COMPILER_TARGET arm-apple-ios3.0)
+string(REPLACE ";" " -arch " ARCH_FLAGS "-arch ${CMAKE_ARCHITECTURES}")
 
-set(CMAKE_C_FLAGS_INIT "-isysroot ${SDK_PATH}")
+set(CMAKE_C_FLAGS_INIT
+    "-isysroot ${SDK_PATH} -B${SDK_PATH}/usr/bin ${ARCH_FLAGS} -Wno-incompatible-sysroot -mlinker-version=253 -nodefaultlibs"
+)
 
 set(CMAKE_FIND_ROOT_PATH ${SDK_PATH})
