@@ -104,6 +104,10 @@ libm:
         dest: math.h
       - source: Source/ARM/math.h
         dest: architecture/arm/math.h
+      - source: Source/fenv.h
+        dest: fenv.h
+      - source: Source/ARM/fenv.h
+        dest: architecture/arm/fenv.h
 
 libplatform:
   repo_url: https://github.com/apple-oss-distributions/libplatform.git
