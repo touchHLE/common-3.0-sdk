@@ -2,58 +2,50 @@ name: Build common 3.0 SDK
 
 on:
   push:
-    branches: [ "main" ]
-    tags: [ 'v*' ]
+    branches: ["main"]
+    tags: ["v*"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build-linux:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux-x86_64
+            shell: bash
 
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: 'true'
+          - os: windows-latest
+            platform: windows-x86_64
+            shell: msys2 {0}
+            env:
+              CC: clang
+              CXX: clang++
 
-    - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build
+          - os: macos-latest
+            platform: macOS-universal
+            cmake_args: "-DCMAKE_OSX_ARCHITECTURES=\"arm64;x86_64\""
+            shell: bash
 
-    - name: Build
-      run: cmake --build ${{github.workspace}}/build
-
-    - name: Create SDK
-      run: cmake --install ${{github.workspace}}/build
-
-    - name: Bundle SDK
-      run: tar -czf common-3.0.sdk-linux-x86_64.tar.gz common-3.0.sdk/
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: common-3.0.sdk-linux-x86_64
-        path: common-3.0.sdk
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v2
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: common-3.0.sdk-linux-x86_64.tar.gz
-  
-  build-windows:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
-        shell: msys2 {0}
+        shell: ${{ matrix.shell }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         submodules: 'true'
-    - uses: msys2/setup-msys2@v2
+
+    - name: Setup Windows Environment
+      if: matrix.os == 'windows-latest'
+      uses: msys2/setup-msys2@v2
       with:
         msystem: UCRT64
         update: true
@@ -66,10 +58,8 @@ jobs:
           mingw-w64-ucrt-x86_64-llvm
 
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build
-      env:
-        CC: clang
-        CXX: clang++
+      run: cmake ${{ matrix.cmake_args || '' }} -B ${{github.workspace}}/build
+      env: ${{ matrix.env || fromJSON('{}') }}
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build
@@ -78,47 +68,15 @@ jobs:
       run: cmake --install ${{github.workspace}}/build
 
     - name: Bundle SDK
-      run: tar -czf common-3.0.sdk-windows-x86_64.tar.gz common-3.0.sdk/
+      run: tar -czf common-3.0.sdk-${{ matrix.platform }}.tar.gz common-3.0.sdk/
 
     - uses: actions/upload-artifact@v4
       with:
-        name: common-3.0.sdk-windows-x86_64
+        name: common-3.0.sdk-${{ matrix.platform }}
         path: common-3.0.sdk
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: common-3.0.sdk-windows-x86_64.tar.gz
-
-  build-macos:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: 'true'
-    
-    - name: Configure CMake
-      run: cmake -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -B ${{github.workspace}}/build
-
-    - name: Build
-      run: cmake --build ${{github.workspace}}/build
-
-    - name: Create SDK
-      run: cmake --install ${{github.workspace}}/build
-
-    - name: Bundle SDK
-      run: tar -czf common-3.0.sdk-macOS-universal.tar.gz common-3.0.sdk/
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: common-3.0.sdk-macOS-universal
-        path: common-3.0.sdk
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v2
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: common-3.0.sdk-macOS-universal.tar.gz
-  
+        files: common-3.0.sdk-${{ matrix.platform }}.tar.gz
