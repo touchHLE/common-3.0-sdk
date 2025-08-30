@@ -62,6 +62,10 @@ jobs:
       run: |
         echo "CC=$(brew --prefix llvm@18)/bin/clang" >> "$GITHUB_ENV"
         echo "CXX=$(brew --prefix llvm@18)/bin/clang++" >> "$GITHUB_ENV"
+    
+    - name: Download SDK
+      run: |
+        curl -L "https://github.com/touchHLE/common-3.0-sdk/releases/latest/download/common-3.0.sdk-${{matrix.platform}}.tar.gz" | tar xz
 
     - name: Configure CMake
       run: cmake ${{ matrix.cmake_args || '' }} -B build
