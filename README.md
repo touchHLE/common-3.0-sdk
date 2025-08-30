@@ -1,13 +1,49 @@
 # Custom SDK for iPhoneOS3.0 using only OSS sources
 
+> **Note for macOS users:** Apple’s system `clang` may cause issues when building/using the SDK.  
+> Please install a non-Apple Clang/LLVM (e.g. via Homebrew: `brew install llvm`) and set the compiler environment variable:  
+> ```bash
+> export CC=$(brew --prefix llvm)/bin/clang
+> ```
+
 ## Build SDK
-
-`cmake -S . -B build`
-
-`cmake --build build`
+```bash
+cmake -S . -B build
+cmake --build build
+```
 
 ## Create SDK
-`cmake --install build`
+```bash
+cmake --install build
+```
+
+## Using the SDK
+
+The SDK has two main purposes: providing a sysroot for cross-compilation and supplying the necessary cctools for building applications.
+
+### Method 1: Direct Clang Flags
+
+Configure your buildby passing the appropriate flags to `clang`:
+
+```bash
+# Set the sysroot
+clang -isysroot /path/to/sdk
+
+# Provide cctools
+clang -B/path/to/sdk/usr/bin
+
+# Combined usage
+clang -isysroot /path/to/sdk -B/path/to/sdk/usr/bin [other flags] source.c
+```
+
+### Method 2: CMake Toolchain
+
+For CMake projects, use the provided toolchain file to automatically configure the build environment:
+
+```bash
+cmake -DCMAKE_TOOLCHAIN_FILE="/path/to/sdk/cmake/Toolchain/common-3.0.cmake" -S . -B build
+cmake --build build
+```
 
 ## Licensing 
 
