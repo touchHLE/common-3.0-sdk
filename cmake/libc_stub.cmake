@@ -21,13 +21,13 @@ add_custom_target(libsystem ALL DEPENDS ${CMAKE_BINARY_DIR}/libSystem.B.dylib)
 
 install(
     FILES ${CMAKE_BINARY_DIR}/libSystem.B.dylib
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
 )
 
 # Also install as libSystem.dylib.
 # Ideally, this would be symlinked but that's flaky on windows.
 install(
     FILES ${CMAKE_BINARY_DIR}/libSystem.B.dylib
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME libSystem.dylib
 )
