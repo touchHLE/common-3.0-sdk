@@ -103,42 +103,42 @@ add_custom_target(
 
 install(
     FILES ${CMAKE_BINARY_DIR}/crt1.v2.o
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME crt1.o
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/crt1.v4.o
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME crt1.3.1.o
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/dylib1.v2.o
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME dylib1.o
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/bundle1.v1.o
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME bundle1.o
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/lazydylib1.o
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME lazydylib1.o
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/gcrt1.o
-    DESTINATION ${SDK_PATH}/usr/lib
+    DESTINATION usr/lib
     RENAME gcrt1.o
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/crt0.o
-    DESTINATION ${SDK_PATH}/usr/local/lib
+    DESTINATION usr/local/lib
     RENAME crt0.o
 )

@@ -64,17 +64,17 @@ jobs:
         echo "CXX=$(brew --prefix llvm@18)/bin/clang++" >> "$GITHUB_ENV"
 
     - name: Configure CMake
-      run: cmake ${{ matrix.cmake_args || '' }} -B ${{github.workspace}}/build
+      run: cmake ${{ matrix.cmake_args || '' }} -B build
       env: ${{ matrix.env || fromJSON('{}') }}
 
     - name: Build
-      run: cmake --build ${{github.workspace}}/build
+      run: cmake --build build
 
     - name: Create SDK
-      run: cmake --install ${{github.workspace}}/build
+      run: cmake --install build
 
     - name: Bundle SDK
-      run: tar -czf common-3.0.sdk-${{ matrix.platform }}.tar.gz common-3.0.sdk/
+      run: tar -czf common-3.0.sdk-${{ matrix.platform }}.tar.gz -C build common-3.0.sdk
 
     - uses: actions/upload-artifact@v4
       with:

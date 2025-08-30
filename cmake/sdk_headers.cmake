@@ -52,6 +52,6 @@ add_custom_target(
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include
-    DESTINATION ${SDK_PATH}/usr
+    DESTINATION usr
     COMPONENT headers
 )

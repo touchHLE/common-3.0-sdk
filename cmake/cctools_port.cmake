@@ -18,6 +18,6 @@ ExternalProject_Add(
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/cctools/bin/
-    DESTINATION ${SDK_PATH}/usr/bin
+    DESTINATION usr/bin
     USE_SOURCE_PERMISSIONS
 )

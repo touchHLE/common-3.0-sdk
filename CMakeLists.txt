@@ -19,10 +19,13 @@ set(CMAKE_GENERATOR "Ninja")
 
 project(common-3.0-sdk)
 
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set_property(CACHE CMAKE_INSTALL_PREFIX PROPERTY VALUE "${CMAKE_BINARY_DIR}/common-3.0.sdk")
+endif()
+
 set(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/sources")
 set(CSU_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/sources/csu")
 set(HEADERS_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/sources/sdk-headers")
-set(SDK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/common-3.0.sdk")
 
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/sdk_headers.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/extra_headers.cmake)
