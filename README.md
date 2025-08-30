@@ -1,10 +1,6 @@
 # Custom SDK for iPhoneOS3.0 using only OSS sources
 
-> **Note for macOS users:** Apple’s system `clang` may cause issues when building/using the SDK.  
-> Please install a non-Apple Clang/LLVM (e.g. via Homebrew: `brew install llvm`) and set the compiler environment variable:  
-> ```bash
-> export CC=$(brew --prefix llvm)/bin/clang
-> ```
+> **Compiler Requirements:** Building and using this SDK requires clang. Note that Apple's system clang can cause issues.
 
 ## Build SDK
 ```bash
