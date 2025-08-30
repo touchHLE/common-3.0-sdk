@@ -109,6 +109,11 @@ jobs:
         echo "CC=$(brew --prefix llvm@18)/bin/clang" >> "$GITHUB_ENV"
         echo "CXX=$(brew --prefix llvm@18)/bin/clang++" >> "$GITHUB_ENV"
     
+    - name: Set git to use LF
+      run: |
+        git config --global core.autocrlf false
+        git config --global core.eol lf
+    
     - name: Clone zlib Repository
       uses: actions/checkout@v5
       with:
