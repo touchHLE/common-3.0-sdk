@@ -79,7 +79,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: common-3.0.sdk-${{ matrix.platform }}
-        path: common-3.0.sdk
+        path: common-3.0.sdk-${{ matrix.platform }}.tar.gz
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
