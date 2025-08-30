@@ -56,6 +56,12 @@ jobs:
           mingw-w64-ucrt-x86_64-clang
           mingw-w64-ucrt-x86_64-dlfcn
           mingw-w64-ucrt-x86_64-llvm
+    
+    - name: Setup macOS Environment
+      if: matrix.os == 'macos-latest'
+      run: |
+        echo "CC=$(brew --prefix llvm@18)/bin/clang" >> "$GITHUB_ENV"
+        echo "CXX=$(brew --prefix llvm@18)/bin/clang++" >> "$GITHUB_ENV"
 
     - name: Configure CMake
       run: cmake ${{ matrix.cmake_args || '' }} -B ${{github.workspace}}/build

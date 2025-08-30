@@ -1,7 +1,20 @@
 cmake_minimum_required(VERSION 3.15)
 
-set(CMAKE_C_COMPILER clang)
-set(CMAKE_CXX_COMPILER clang++)
+if(NOT CMAKE_C_COMPILER)
+    if(DEFINED ENV{CC})
+        set(CMAKE_C_COMPILER $ENV{CC})
+    else()
+        set(CMAKE_C_COMPILER clang)
+    endif()
+endif()
+
+if(NOT CMAKE_CXX_COMPILER)
+    if(DEFINED ENV{CXX})
+        set(CMAKE_CXX_COMPILER $ENV{CXX})
+    else()
+        set(CMAKE_CXX_COMPILER clang++)
+    endif()
+endif()
 set(CMAKE_GENERATOR "Ninja")
 
 project(common-3.0-sdk)

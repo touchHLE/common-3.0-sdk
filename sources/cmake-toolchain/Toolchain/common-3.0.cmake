@@ -16,7 +16,7 @@ endif()
 string(REPLACE ";" " -arch " ARCH_FLAGS "-arch ${CMAKE_ARCHITECTURES}")
 
 set(CMAKE_C_FLAGS_INIT
-    "-isysroot ${SDK_PATH} -B${SDK_PATH}/usr/bin ${ARCH_FLAGS} -Wno-incompatible-sysroot -mlinker-version=253 -nodefaultlibs -mfpu=vfpv2"
+    "-isysroot ${SDK_PATH} -B${SDK_PATH}/usr/bin ${ARCH_FLAGS} -Wno-incompatible-sysroot -mlinker-version=253 -mfpu=vfpv2"
 )
 
 set(CMAKE_FIND_ROOT_PATH ${SDK_PATH})
