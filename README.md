@@ -3,6 +3,7 @@
 > **Compiler Requirements:** Building and using this SDK requires clang. Note that Apple's system clang can cause issues.
 
 ## Build SDK
+> **Note**: Requires a pre-built SDK for bootstrapping. Download the latest release and extract it to the project root.
 ```bash
 cmake -S . -B build
 cmake --build build
