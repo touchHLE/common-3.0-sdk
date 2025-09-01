@@ -1,4 +1,4 @@
-name: Build common 3.0 SDK
+name: Build and Test common 3.0 SDK
 
 on:
   push:
@@ -24,9 +24,6 @@ jobs:
           - os: windows-latest
             platform: windows-x86_64
             shell: msys2 {0}
-            env:
-              CC: clang
-              CXX: clang++
 
           - os: macos-latest
             platform: macOS-universal
@@ -40,11 +37,13 @@ jobs:
     
     env:
       SDK_VERSION: "0.2.5"
+      EXPECTED_TEST_HASH: "0a3322789057db1af7784d98fb7b0992b38b554b710d6e4537733c7fa9c585f7"
 
     steps:
     - uses: actions/checkout@v5
       with:
         submodules: 'true'
+        path: sdk-source
 
     - name: Setup Windows Environment
       if: matrix.os == 'windows-latest'
@@ -55,88 +54,77 @@ jobs:
         install: >-
           git
           patch
+          dos2unix
           mingw-w64-ucrt-x86_64-cmake
           mingw-w64-ucrt-x86_64-clang
           mingw-w64-ucrt-x86_64-dlfcn
           mingw-w64-ucrt-x86_64-llvm
     
-    - name: Setup macOS Environment
-      if: matrix.os == 'macos-latest'
-      run: |
-        echo "CC=$(brew --prefix llvm@18)/bin/clang" >> "$GITHUB_ENV"
-        echo "CXX=$(brew --prefix llvm@18)/bin/clang++" >> "$GITHUB_ENV"
+    - name: Install LLVM 20
+      if: matrix.os != 'windows-latest'
+      uses: KyleMayes/install-llvm-action@v2
+      with:
+        version: "20"
+        env: true 
     
     - name: Download SDK
+      working-directory: sdk-source
       run: |
         curl -L "https://github.com/touchHLE/common-3.0-sdk/releases/download/v${{env.SDK_VERSION}}/common-3.0.sdk-${{matrix.platform}}.tar.gz" | tar xz
 
     - name: Configure CMake
+      working-directory: sdk-source
       run: cmake ${{ matrix.cmake_args || '' }} -B build
-      env: ${{ matrix.env || fromJSON('{}') }}
 
     - name: Build
+      working-directory: sdk-source
       run: cmake --build build
 
     - name: Create SDK
+      working-directory: sdk-source
       run: cmake --install build
 
     - name: Bundle SDK
+      working-directory: sdk-source
       run: tar -czf common-3.0.sdk-${{ matrix.platform }}.tar.gz -C build common-3.0.sdk
+
+    - name: Clone Test Repository
+      uses: actions/checkout@v5
+      with:
+        repository: touchHLE/zlib-dylib
+        submodules: 'true'
+        path: zlib-source
+    
+    - name: Fix Line Endings in Submodule
+      if: matrix.os == 'windows-latest'
+      working-directory: zlib-source
+      run: |
+        find zlib-src -name "*.exp" -exec dos2unix {} \;
+
+    - name: Copy SDK to Test Directory
+      run: cp -r sdk-source/build/common-3.0.sdk zlib-source/
+
+    - name: Configure Test CMake Project
+      working-directory: zlib-source
+      run: cmake -DCMAKE_TOOLCHAIN_FILE="common-3.0.sdk/cmake/Toolchain/common-3.0.cmake" -S . -B build -G "Ninja"
+      
+    - name: Build Test
+      working-directory: zlib-source
+      run: cmake --build build
+    
+    - name: Verify Test Output Hash
+      working-directory: zlib-source
+      run: | 
+        echo "${{ env.EXPECTED_TEST_HASH }} build/libz.1.2.3.dylib" > test.sha256sum
+        sha256sum -c test.sha256sum
 
     - uses: actions/upload-artifact@v4
       with:
         name: common-3.0.sdk-${{ matrix.platform }}
-        path: common-3.0.sdk-${{ matrix.platform }}.tar.gz
+        path: sdk-source/common-3.0.sdk-${{ matrix.platform }}.tar.gz
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: common-3.0.sdk-${{ matrix.platform }}.tar.gz
-
-  test:
-    needs: build
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        include:
-          - os: ubuntu-latest
-            platform: linux-x86_64
-          - os: windows-latest
-            platform: windows-x86_64
-          - os: macos-latest
-            platform: macOS-universal
-    
-    runs-on: ${{ matrix.os }}
-
-    steps:
-    - name: Setup macOS Environment
-      if: matrix.os == 'macos-latest'
-      run: |
-        echo "CC=$(brew --prefix llvm@18)/bin/clang" >> "$GITHUB_ENV"
-        echo "CXX=$(brew --prefix llvm@18)/bin/clang++" >> "$GITHUB_ENV"
-    
-    - name: Set git to use LF
-      run: |
-        git config --global core.autocrlf false
-        git config --global core.eol lf
-    
-    - name: Clone zlib Repository
-      uses: actions/checkout@v5
-      with:
-        repository: touchHLE/zlib-dylib
-        submodules: 'true'
-    
-    - name: Download SDK Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: common-3.0.sdk-${{ matrix.platform }}
-
-    - name: Extract SDK
-      run: tar -xzf common-3.0.sdk-${{ matrix.platform }}.tar.gz
-
-    - name: Configure zlib CMake Project
-      run: cmake -DCMAKE_TOOLCHAIN_FILE="common-3.0.sdk/cmake/Toolchain/common-3.0.cmake" -S . -B build -G "Ninja"
-
-    - name: Build zlib
-      run: cmake --build build
+        files: sdk-source/common-3.0.sdk-${{ matrix.platform }}.tar.gz
