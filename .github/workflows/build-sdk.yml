@@ -39,7 +39,7 @@ jobs:
         shell: ${{ matrix.shell }}
     
     env:
-      SDK_VERSION: "0.2.4"
+      SDK_VERSION: "0.2.5"
 
     steps:
     - uses: actions/checkout@v5
