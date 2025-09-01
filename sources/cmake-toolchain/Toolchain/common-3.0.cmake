@@ -1,4 +1,5 @@
 get_filename_component(SDK_PATH "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+set(SDK_PATH "${SDK_PATH}" CACHE PATH "SDK installation path" FORCE)
 list(APPEND CMAKE_MODULE_PATH "${SDK_PATH}/cmake")
 
 set(CMAKE_SYSTEM_NAME common-3.0)
