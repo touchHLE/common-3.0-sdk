@@ -37,6 +37,9 @@ jobs:
     defaults:
       run:
         shell: ${{ matrix.shell }}
+    
+    env:
+      SDK_VERSION: "0.2.4"
 
     steps:
     - uses: actions/checkout@v5
@@ -65,7 +68,7 @@ jobs:
     
     - name: Download SDK
       run: |
-        curl -L "https://github.com/touchHLE/common-3.0-sdk/releases/latest/download/common-3.0.sdk-${{matrix.platform}}.tar.gz" | tar xz
+        curl -L "https://github.com/touchHLE/common-3.0-sdk/releases/download/v${{env.SDK_VERSION}}/common-3.0.sdk-${{matrix.platform}}.tar.gz" | tar xz
 
     - name: Configure CMake
       run: cmake ${{ matrix.cmake_args || '' }} -B build
