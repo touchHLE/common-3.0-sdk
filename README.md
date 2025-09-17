@@ -1,9 +1,10 @@
 # Custom SDK for iPhoneOS3.0 using only OSS sources
 
-> **Compiler Requirements:** Building and using this SDK requires clang. Note that Apple's system clang can cause issues.
+> **Compiler Requirements:** Building and using this SDK requires clang. Note that Apple's system clang can cause issues when cross compiling components.
 
 ## Build SDK
 > **Note**: Requires a pre-built SDK for bootstrapping. Download the latest release and extract it to the project root.
+> **Note**: On macOS building universal binaries (ld and lipo) require using Apple's system clang.
 ```bash
 cmake -S . -B build
 cmake --build build
