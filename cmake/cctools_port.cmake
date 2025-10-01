@@ -18,6 +18,13 @@ if(APPLE)
     # Need to use Apple clang in order to build universal cctools
     set(CCTOOLS_C_COMPILER /usr/bin/clang)
     set(CCTOOLS_CXX_COMPILER /usr/bin/clang++)
+
+    if(NOT EXISTS ${CCTOOLS_C_COMPILER} OR NOT EXISTS ${CCTOOLS_CXX_COMPILER})
+        message(
+            FATAL_ERROR
+            "Apple clang compilers not found, required for building cctools_port."
+        )
+    endif()
 else()
     set(CCTOOLS_C_COMPILER ${CMAKE_C_COMPILER})
     set(CCTOOLS_CXX_COMPILER ${CMAKE_CXX_COMPILER})

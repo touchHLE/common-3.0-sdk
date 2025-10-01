@@ -1,23 +1,15 @@
 cmake_minimum_required(VERSION 3.15)
 
-if(NOT CMAKE_C_COMPILER)
-    if(DEFINED ENV{CC})
-        set(CMAKE_C_COMPILER $ENV{CC})
-    else()
-        set(CMAKE_C_COMPILER clang)
-    endif()
-endif()
-
-if(NOT CMAKE_CXX_COMPILER)
-    if(DEFINED ENV{CXX})
-        set(CMAKE_CXX_COMPILER $ENV{CXX})
-    else()
-        set(CMAKE_CXX_COMPILER clang++)
-    endif()
-endif()
 set(CMAKE_GENERATOR "Ninja")
 
 project(common-3.0-sdk)
+
+if(
+    NOT CMAKE_C_COMPILER_ID STREQUAL "Clang"
+    OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang"
+)
+    message(FATAL_ERROR "LLVM Clang required for building target's components.")
+endif()
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set_property(
