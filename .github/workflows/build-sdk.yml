@@ -39,7 +39,7 @@ jobs:
       SDK_VERSION: "0.3.1"
       CC: clang
       CXX: clang++
-      EXPECTED_TEST_HASH: "0a3322789057db1af7784d98fb7b0992b38b554b710d6e4537733c7fa9c585f7"
+      EXPECTED_TEST_HASH: "2b75860a1be9a15e023d8e9660bd5af9d384bf14e53726898ee7cf6f9a0d03dd"
 
     steps:
     - uses: actions/checkout@v5
@@ -62,12 +62,21 @@ jobs:
           mingw-w64-ucrt-x86_64-dlfcn
           mingw-w64-ucrt-x86_64-llvm
     
-    - name: Install LLVM 20
-      if: matrix.os != 'windows-latest'
-      uses: KyleMayes/install-llvm-action@v2
-      with:
-        version: "20"
-        env: true 
+    - name: Setup Ubuntu Environment
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        sudo ./llvm.sh 21
+        echo "CC=clang-21" >> $GITHUB_ENV
+        echo "CXX=clang++-21" >> $GITHUB_ENV
+    
+    - name: Setup macOS Environment
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install llvm@21
+        echo "CC=$(brew --prefix llvm)/bin/clang" >> $GITHUB_ENV
+        echo "CXX=$(brew --prefix llvm)/bin/clang++" >> $GITHUB_ENV
     
     - name: Download SDK
       working-directory: sdk-source
@@ -117,6 +126,7 @@ jobs:
     - name: Verify Test Output Hash
       working-directory: zlib-source
       run: | 
+        echo -n "Test file hash: " && sha256sum build/libz.1.2.3.dylib
         echo "${{ env.EXPECTED_TEST_HASH }} build/libz.1.2.3.dylib" > test.sha256sum
         sha256sum -c test.sha256sum
 
