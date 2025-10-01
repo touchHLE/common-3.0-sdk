@@ -36,7 +36,7 @@ jobs:
         shell: ${{ matrix.shell }}
     
     env:
-      SDK_VERSION: "0.2.5"
+      SDK_VERSION: "0.3.1"
       CC: clang
       CXX: clang++
       EXPECTED_TEST_HASH: "0a3322789057db1af7784d98fb7b0992b38b554b710d6e4537733c7fa9c585f7"
