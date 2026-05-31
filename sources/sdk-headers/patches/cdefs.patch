@@ -2,6 +2,40 @@ diff --git a/usr/include/sys/cdefs.h b/usr/include/sys/cdefs.h
 index 59e922b..868033e 100644
 --- a/usr/include/sys/cdefs.h
 +++ b/usr/include/sys/cdefs.h
+@@ -251,33 +251,9 @@
+  * used without a prototype in scope.
+  */
+ 
+-/* These settings are particular to each product. */
+-#ifdef KERNEL
+-#define __DARWIN_ONLY_64_BIT_INO_T	0
+-#define __DARWIN_ONLY_UNIX_CONFORMANCE	0
+-#define __DARWIN_ONLY_VERS_1050		0
+-#define	__DARWIN_SUF_DARWIN10	"_darwin10"
+-#define	__DARWIN10_ALIAS(sym)	__asm("_" __STRING(sym) __DARWIN_SUF_DARWIN10)
+-#else /* !KERNEL */
+-#ifdef PRODUCT_AppleTV
+-/* Product: AppleTV */
+ #define __DARWIN_ONLY_64_BIT_INO_T	1
+ #define __DARWIN_ONLY_UNIX_CONFORMANCE	1
+ #define __DARWIN_ONLY_VERS_1050		1
+-#endif /* PRODUCT_AppleTV */
+-#ifdef PRODUCT_iPhone
+-/* Product: iPhone */
+-#define __DARWIN_ONLY_64_BIT_INO_T	1
+-#define __DARWIN_ONLY_UNIX_CONFORMANCE	1
+-#define __DARWIN_ONLY_VERS_1050		1
+-#endif /* PRODUCT_iPhone */
+-#ifdef PRODUCT_MacOSX
+-/* Product: MacOSX */
+-#define __DARWIN_ONLY_64_BIT_INO_T	0
+-/* #undef __DARWIN_ONLY_UNIX_CONFORMANCE (automatically set for 64-bit) */
+-#define __DARWIN_ONLY_VERS_1050		0
+-#endif /* PRODUCT_MacOSX */
+-#endif /* KERNEL */
+ 
+ /*
+  * The __DARWIN_ALIAS macros are used to do symbol renaming; they allow
 @@ -377,11 +377,7 @@
   * symbol suffixes used for symbol versioning
   */
